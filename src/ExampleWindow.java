@@ -1,14 +1,8 @@
-import java.awt.BorderLayout;
-
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 // EXAMPLE WINDOW CLASS ++++++++++++++++++++++++++++++++++++++++++
 public class ExampleWindow extends JFrame {
@@ -18,19 +12,26 @@ public class ExampleWindow extends JFrame {
 	private JLabel _nameLabel;
 	private JTextField _nameTextField;
 	
+	private NameTextFieldHandler _nameTextFieldHandler;
+	
 	// PUBLIC PROPERTIES +++++++++++++++++++++++++++++++++++++++++
 	public JLabel getHelloLabel() {
 		return this._helloLabel;
 	}
 
 	public void setHelloLabel(JLabel helloLabel) {
+		this._contentPane.remove(this._helloLabel);
 		this._helloLabel = helloLabel;
+		this._addHelloLabel();
 	}
 
 	// CONSTRUCTOR METHOD +++++++++++++++++++++++++++++++++++++++
 	public ExampleWindow() {
 		this._initialize();
 		this._addUIComponents();
+		
+		this._nameTextFieldHandler = new NameTextFieldHandler(this);
+		this._nameTextField.addActionListener(this._nameTextFieldHandler);
 	}
 	
 	// PRIVATE METHODS +++++++++++++++++++++++++++++++++++++++++++
@@ -42,6 +43,11 @@ public class ExampleWindow extends JFrame {
 		setContentPane(this._contentPane);
 		
 	}
+	
+	private void _addHelloLabel() {
+		this._helloLabel.setBounds(5, 6, 96, 23);
+		this._contentPane.add(this._helloLabel);
+	}
 
 	private void _addUIComponents() {
 		// Use Absolute Layout
@@ -49,8 +55,7 @@ public class ExampleWindow extends JFrame {
 		
 		// Hello Label
 		this._helloLabel = new JLabel("New label");
-		this._helloLabel.setBounds(5, 6, 96, 23);
-		this._contentPane.add(this._helloLabel);
+		this._addHelloLabel();
 		
 		// Name Label
 		this._nameLabel = new JLabel("Enter Name:");
