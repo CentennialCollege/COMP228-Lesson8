@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,6 +12,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JSpinner;
+import javax.swing.JList;
+import javax.swing.ListSelectionModel;
+import javax.swing.AbstractListModel;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 // EXAMPLE WINDOW CLASS ++++++++++++++++++++++++++++++++++++++++++
 public class ExampleWindow extends JFrame implements ActionListener {
@@ -22,6 +28,7 @@ public class ExampleWindow extends JFrame implements ActionListener {
 	private JButton _goodbyeButton;
 	private JLabel _ageLabel;
 	private JTextField _ageTextField;
+	private JComboBox _todoComboBox;
 	
 	private Border _redLine, _blackLine;
 	
@@ -51,6 +58,8 @@ public class ExampleWindow extends JFrame implements ActionListener {
 		this._goodbyeButton.addActionListener(this);
 		
 		this._ageTextField.addActionListener(this);
+		
+		this._todoComboBox.addActionListener(this);
 	}
 	
 	// PRIVATE METHODS +++++++++++++++++++++++++++++++++++++++++++
@@ -90,6 +99,7 @@ public class ExampleWindow extends JFrame implements ActionListener {
 		this._nameTextField = new JTextField();
 		this._nameTextField.setBounds(99, 35, 131, 29);
 		this._nameTextField.setText("");
+		this._nameTextField.setBorder(this._blackLine);
 		this._contentPane.add(this._nameTextField);
 		
 		this._goodbyeButton = new JButton("Click Me!");
@@ -102,8 +112,14 @@ public class ExampleWindow extends JFrame implements ActionListener {
 		
 		this._ageTextField = new JTextField();
 		this._ageTextField.setBounds(99, 76, 131, 28);
+		this._ageTextField.setBorder(this._blackLine);
 		this._contentPane.add(this._ageTextField);
-		this._ageTextField.setColumns(10);
+		
+		this._todoComboBox = new JComboBox();
+		this._todoComboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
+		this._todoComboBox.setSelectedIndex(0);
+		this._todoComboBox.setBounds(178, 116, 64, 38);
+		this._contentPane.add(this._todoComboBox);
 		
 	}
 
@@ -125,16 +141,23 @@ public class ExampleWindow extends JFrame implements ActionListener {
 			try {
 				int ageDifference = 46 - Integer.parseInt(this._ageTextField.getText());
 				this._helloLabel.setText(Integer.toString(ageDifference));
-				this._ageTextField.setBorder(null);
+				this._ageTextField.setBorder(this._blackLine);
+			
 				
 			} catch (Exception e) {
 				this._helloLabel.setText("Hey that was just wrong");
 				this._ageTextField.selectAll();
 				this._ageTextField.setBorder(this._redLine);
 			}
-			
-			
-			
+		}
+		
+		if(event.getSource() == this._todoComboBox) {
+			ArrayList<JTextField> textFieldArrayList = new ArrayList<JTextField>();
+			for(int index = 0; index <= this._todoComboBox.getSelectedIndex(); index++) {
+				textFieldArrayList.add(new JTextField());
+				textFieldArrayList.get(index).setBounds(99, 76 + (index*30), 131, 28);
+				this._contentPane.add(textFieldArrayList.get(index));
+			}
 		}
 		
 	}
