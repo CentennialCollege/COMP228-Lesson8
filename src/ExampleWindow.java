@@ -1,18 +1,32 @@
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JSpinner;
 
 // EXAMPLE WINDOW CLASS ++++++++++++++++++++++++++++++++++++++++++
-public class ExampleWindow extends JFrame {
+public class ExampleWindow extends JFrame implements ActionListener {
 	// PRIVATE INSTANCE VARIABLES +++++++++++++++++++++++++++++++
 	private JPanel _contentPane; // JPanel Container
 	private JLabel _helloLabel;
 	private JLabel _nameLabel;
 	private JTextField _nameTextField;
+	private JButton _goodbyeButton;
+	private JLabel _ageLabel;
+	private JTextField _ageTextField;
 	
-	private NameTextFieldHandler _nameTextFieldHandler;
+	private Border _redLine, _blackLine;
+	
+	
+	//private NameTextFieldHandler _nameTextFieldHandler;
 	
 	// PUBLIC PROPERTIES +++++++++++++++++++++++++++++++++++++++++
 	public JLabel getHelloLabel() {
@@ -28,10 +42,15 @@ public class ExampleWindow extends JFrame {
 	// CONSTRUCTOR METHOD +++++++++++++++++++++++++++++++++++++++
 	public ExampleWindow() {
 		this._initialize();
+		this._setupBorders();
 		this._addUIComponents();
 		
-		this._nameTextFieldHandler = new NameTextFieldHandler(this);
-		this._nameTextField.addActionListener(this._nameTextFieldHandler);
+		// Register event handler for Action Listeners
+		this._nameTextField.addActionListener(this);
+		
+		this._goodbyeButton.addActionListener(this);
+		
+		this._ageTextField.addActionListener(this);
 	}
 	
 	// PRIVATE METHODS +++++++++++++++++++++++++++++++++++++++++++
@@ -44,8 +63,13 @@ public class ExampleWindow extends JFrame {
 		
 	}
 	
+	private void _setupBorders() {
+		this._blackLine = BorderFactory.createLineBorder(Color.black);
+		this._redLine = BorderFactory.createLineBorder(Color.red);
+	}
+	
 	private void _addHelloLabel() {
-		this._helloLabel.setBounds(5, 6, 96, 23);
+		this._helloLabel.setBounds(5, 6, 225, 23);
 		this._contentPane.add(this._helloLabel);
 	}
 
@@ -66,9 +90,52 @@ public class ExampleWindow extends JFrame {
 		this._nameTextField = new JTextField();
 		this._nameTextField.setBounds(99, 35, 131, 29);
 		this._nameTextField.setText("");
-		this._contentPane.add(_nameTextField);
+		this._contentPane.add(this._nameTextField);
 		
+		this._goodbyeButton = new JButton("Click Me!");
+		this._goodbyeButton.setBounds(115, 223, 117, 29);
+		this._contentPane.add(this._goodbyeButton);
+		
+		this._ageLabel = new JLabel("Enter Age:");
+		this._ageLabel.setBounds(5, 82, 76, 16);
+		this._contentPane.add(this._ageLabel);
+		
+		this._ageTextField = new JTextField();
+		this._ageTextField.setBounds(99, 76, 131, 28);
+		this._contentPane.add(this._ageTextField);
+		this._ageTextField.setColumns(10);
 		
 	}
 
+	
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		
+		if(event.getSource() == this._nameTextField) {
+			
+			this._helloLabel.setText(this._nameTextField.getText());
+		}
+		
+		if(event.getSource() == this._goodbyeButton) {
+			this._helloLabel.setText("goodbyeButton - clicked");
+		}
+		
+		if(event.getSource() == this._ageTextField) {
+			
+			try {
+				int ageDifference = 46 - Integer.parseInt(this._ageTextField.getText());
+				this._helloLabel.setText(Integer.toString(ageDifference));
+				this._ageTextField.setBorder(null);
+				
+			} catch (Exception e) {
+				this._helloLabel.setText("Hey that was just wrong");
+				this._ageTextField.selectAll();
+				this._ageTextField.setBorder(this._redLine);
+			}
+			
+			
+			
+		}
+		
+	}
 }
