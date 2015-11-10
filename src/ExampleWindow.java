@@ -30,7 +30,7 @@ import java.awt.Dimension;
 public class ExampleWindow extends JFrame implements ActionListener {
 	// PRIVATE INSTANCE VARIABLES +++++++++++++++++++++++++++++++
 	private JPanel _contentPane; // JPanel Container
-	private JLabel _helloLabel;
+	private JLabel _messageLabel;
 	private JLabel _nameLabel;
 	private JTextField _nameTextField;
 	private JButton _goodbyeButton;
@@ -43,19 +43,15 @@ public class ExampleWindow extends JFrame implements ActionListener {
 	
 	private Border _redLine, _blackLine;
 	
-	
-	
-	//private NameTextFieldHandler _nameTextFieldHandler;
-	
 	// PUBLIC PROPERTIES +++++++++++++++++++++++++++++++++++++++++
 	public JLabel getHelloLabel() {
-		return this._helloLabel;
+		return this._messageLabel;
 	}
 
-	public void setHelloLabel(JLabel helloLabel) {
-		this._contentPane.remove(this._helloLabel);
-		this._helloLabel = helloLabel;
-		this._addHelloLabel();
+	public void setHelloLabel(JLabel messageLabel) {
+		this._contentPane.remove(this._messageLabel);
+		this._messageLabel = messageLabel;
+		this._addMessageLabel();
 	}
 
 	// CONSTRUCTOR METHOD +++++++++++++++++++++++++++++++++++++++
@@ -81,7 +77,6 @@ public class ExampleWindow extends JFrame implements ActionListener {
 		this._contentPane = new JPanel();
 		this._contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(this._contentPane);
-		
 	}
 	
 	private void _setupBorders() {
@@ -89,9 +84,9 @@ public class ExampleWindow extends JFrame implements ActionListener {
 		this._redLine = BorderFactory.createLineBorder(Color.red);
 	}
 	
-	private void _addHelloLabel() {
-		this._helloLabel.setBounds(5, 6, 225, 23);
-		this._contentPane.add(this._helloLabel);
+	private void _addMessageLabel() {
+		this._messageLabel.setBounds(5, 6, 225, 23);
+		this._contentPane.add(this._messageLabel);
 	}
 
 	private void _addUIComponents() {
@@ -99,8 +94,8 @@ public class ExampleWindow extends JFrame implements ActionListener {
 		this._contentPane.setLayout(null);
 		
 		// Hello Label
-		this._helloLabel = new JLabel("New label");
-		this._addHelloLabel();
+		this._messageLabel = new JLabel("New label");
+		this._addMessageLabel();
 		
 		// Name Label
 		this._nameLabel = new JLabel("Enter Name:");
@@ -156,6 +151,7 @@ public class ExampleWindow extends JFrame implements ActionListener {
 		//add a default todoTextField to the todoPanel
 		this._todoArrayList = new ArrayList<TodoTextField>();
 		this._todoArrayList.add(new TodoTextField(this._todoPanel, 0));
+		this._messageLabel.setText("1 Todo Fields");
 	}
 
 	@Override
@@ -163,23 +159,23 @@ public class ExampleWindow extends JFrame implements ActionListener {
 
 		if(event.getSource() == this._nameTextField) {
 			
-			this._helloLabel.setText(this._nameTextField.getText());
+			this._messageLabel.setText(this._nameTextField.getText());
 		}
 		
 		if(event.getSource() == this._goodbyeButton) {
-			this._helloLabel.setText("goodbyeButton - clicked");
+			this._messageLabel.setText("goodbyeButton - clicked");
 		}
 		
 		if(event.getSource() == this._ageTextField) {
 			
 			try {
 				int ageDifference = 46 - Integer.parseInt(this._ageTextField.getText());
-				this._helloLabel.setText(Integer.toString(ageDifference));
+				this._messageLabel.setText(Integer.toString(ageDifference));
 				this._ageTextField.setBorder(this._blackLine);
 			
 				
 			} catch (Exception e) {
-				this._helloLabel.setText("Hey that was just wrong");
+				this._messageLabel.setText("Hey that was just wrong");
 				this._ageTextField.selectAll();
 				this._ageTextField.setBorder(this._redLine);
 			}
@@ -199,6 +195,8 @@ public class ExampleWindow extends JFrame implements ActionListener {
 			for(int index = 0; index < numTodoFields; index++) {
 				this._todoArrayList.add(new TodoTextField(this._todoPanel, index));
 			}
+			
+			this._messageLabel.setText(numTodoFields + " Todo Fields");
 			
 			// redraw the todoPanel
 			this._todoPanel.revalidate();	

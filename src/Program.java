@@ -11,12 +11,6 @@ public class Program {
 			ExampleWindow frame = new ExampleWindow();
 			frame.setVisible(true);
 			
-			JLabel myLabel = new JLabel("GoodBye!!!");
-			
-			
-			frame.getHelloLabel().setText("Hello World!");
-			frame.setHelloLabel(myLabel);
-			
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
