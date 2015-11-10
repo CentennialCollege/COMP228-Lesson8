@@ -1,33 +1,24 @@
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JSpinner;
-import javax.swing.JList;
-import javax.swing.ListSelectionModel;
-import javax.swing.AbstractListModel;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.FlowLayout;
-import java.awt.Dimension;
 
 // EXAMPLE WINDOW CLASS ++++++++++++++++++++++++++++++++++++++++++
-public class ExampleWindow extends JFrame implements ActionListener {
+public class TodoWindow extends JFrame implements ActionListener {
 	// PRIVATE INSTANCE VARIABLES +++++++++++++++++++++++++++++++
 	private JPanel _contentPane; // JPanel Container
 	private JLabel _messageLabel;
@@ -36,7 +27,7 @@ public class ExampleWindow extends JFrame implements ActionListener {
 	private JButton _goodbyeButton;
 	private JLabel _ageLabel;
 	private JTextField _ageTextField;
-	private JComboBox _todoComboBox;
+	private JComboBox<String> _todoComboBox;
 	private JPanel _todoPanel;
 	private JScrollPane _todoScrollPane;
 	private ArrayList<TodoTextField> _todoArrayList;
@@ -55,7 +46,7 @@ public class ExampleWindow extends JFrame implements ActionListener {
 	}
 
 	// CONSTRUCTOR METHOD +++++++++++++++++++++++++++++++++++++++
-	public ExampleWindow() {
+	public TodoWindow() {
 		this._initialize();
 		this._setupBorders();
 		this._addUIComponents();
@@ -122,8 +113,8 @@ public class ExampleWindow extends JFrame implements ActionListener {
 		this._ageTextField.setBorder(this._blackLine);
 		this._contentPane.add(this._ageTextField);
 		
-		this._todoComboBox = new JComboBox();
-		this._todoComboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}));
+		this._todoComboBox = new JComboBox<String>();
+		this._todoComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}));
 		this._todoComboBox.setSelectedIndex(0);
 		this._todoComboBox.setBounds(5, 120, 64, 38);
 		this._contentPane.add(this._todoComboBox);
