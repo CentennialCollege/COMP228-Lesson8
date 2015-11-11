@@ -39,7 +39,7 @@ public class TodoWindow extends JFrame implements ActionListener {
 		return this._messageLabel;
 	}
 
-	public void setHelloLabel(JLabel messageLabel) {
+	public void setMessageLabel(JLabel messageLabel) {
 		this._contentPane.remove(this._messageLabel);
 		this._messageLabel = messageLabel;
 		this._addMessageLabel();
@@ -59,6 +59,7 @@ public class TodoWindow extends JFrame implements ActionListener {
 		this._ageTextField.addActionListener(this);
 		
 		this._todoComboBox.addActionListener(this);
+	
 	}
 	
 	// PRIVATE METHODS +++++++++++++++++++++++++++++++++++++++++++
@@ -80,6 +81,7 @@ public class TodoWindow extends JFrame implements ActionListener {
 		this._contentPane.add(this._messageLabel);
 	}
 
+	// adds all the UI Components to the Content Pane
 	private void _addUIComponents() {
 		// Use Absolute Layout
 		this._contentPane.setLayout(null);
@@ -141,7 +143,7 @@ public class TodoWindow extends JFrame implements ActionListener {
 		
 		//add a default todoTextField to the todoPanel
 		this._todoArrayList = new ArrayList<TodoTextField>();
-		this._todoArrayList.add(new TodoTextField(this._todoPanel, 0));
+		this._todoArrayList.add(new TodoTextField(this._todoPanel, 0, this._messageLabel));
 		this._messageLabel.setText("1 Todo Fields");
 	}
 
@@ -179,19 +181,28 @@ public class TodoWindow extends JFrame implements ActionListener {
 			//clear the todoPanel 
 			this._todoPanel.removeAll();
 
+			for (TodoTextField todoTextField : this._todoArrayList) {
+				todoTextField.removeEventHandler();
+			}
+			
 			// clear the todoArrayList
 			this._todoArrayList.clear();
 			
 			// add the selected number of rows to the todoArrayList 
 			for(int index = 0; index < numTodoFields; index++) {
-				this._todoArrayList.add(new TodoTextField(this._todoPanel, index));
+				TodoTextField todoTextField = new TodoTextField(this._todoPanel, index, this._messageLabel);
+				this._todoArrayList.add(todoTextField);
 			}
 			
 			this._messageLabel.setText(numTodoFields + " Todo Fields");
 			
+			
 			// redraw the todoPanel
 			this._todoPanel.revalidate();	
+			
 		}
+		
+		
 		
 	}
 }
